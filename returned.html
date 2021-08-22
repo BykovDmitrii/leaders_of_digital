@@ -1,0 +1,39 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Результат работы</title>
+  </head>
+  <body>
+    <h1>Получены следующие параметры</h1>
+
+     <table border="1" width="100%" cellpadding="5">
+        <tr>
+            <th>Билборды</th>
+            <th>Требуемое OTS за период</th>
+            <th>Период</th>
+            <th>Время</th>
+        </tr>
+        <tr>
+            <td style="text-align:center">
+            {% for val in bilboards %}
+                {{ val }}<br/>
+            {% endfor %}
+            </td>
+            <td style="text-align:center">{{ots}}</td>
+            <td style="text-align:center">{{start_date}} - {{end_date}}</td>
+            <td style="text-align:center"> {{start_time}} - {{end_time}}</td>
+        </tr>
+ </table>
+    <hr>
+
+    <script>
+      var jsonfile ={{jsonfile}};
+    </script>
+  </head>
+  <body>
+    <div class="container">
+    {{jsonfile}}
+  </div>
+  
+  </body>
+</html>

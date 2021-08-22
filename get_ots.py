@@ -13,13 +13,13 @@ import re
 
 # data_path = "C:\\Downloads\\gallery_data\\RowData"
 # timeseries_path = "C:\\Downloads\\gallery_hack"
-
+'''
 data_path = "gallery_data/RowData" # CHANGE FOR YOUR CASE
 timeseries_path = "." # path with my csv timeseries, CHANGE FOR YOUR CASE
 
 filename_pl = os.path.join(data_path, "..", "player_details.csv")
 dfp = pd.read_csv(filename_pl, sep=";", index_col=False)
-
+'''
 # for example, "257" -> "NVS036APL"
 def player_id_to_num(player_id):
     return dfp[dfp.PlayerId == player_id].PlayerNumber.iloc[0]
@@ -28,7 +28,8 @@ def player_id_to_num(player_id):
 # player is player text identifier
 # dt1 is start day in format of datetime
 # dt2 is end day INCLUDING in format of datetime
-def get_ots(player_num, dt1, dt2_incl, train_len=30*6, order=(30, 0, 0)):
+def get_ots(player_num, dt1, dt2_incl, dfp, timeseries_path, train_len=30*6, order=(30, 0, 0)):
+
     player = dfp[dfp.PlayerNumber == player_num].PlayerId.iloc[0]
     dt2 = dt2_incl + timedelta(days=1)
     # using: [dt1, dt2)
