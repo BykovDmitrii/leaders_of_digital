@@ -1,7 +1,5 @@
 import pandas as pd
-# !pip install fastparquet
 import numpy as np
-# import matplotlib.pyplot as plt
 from statsmodels.tsa.seasonal import seasonal_decompose
 from statsmodels.tsa.arima.model import ARIMA
 
@@ -11,17 +9,8 @@ from datetime import datetime
 import os
 import re
 
-# data_path = "C:\\Downloads\\gallery_data\\RowData"
-# timeseries_path = "C:\\Downloads\\gallery_hack"
-'''
-data_path = "gallery_data/RowData" # CHANGE FOR YOUR CASE
-timeseries_path = "." # path with my csv timeseries, CHANGE FOR YOUR CASE
-
-filename_pl = os.path.join(data_path, "..", "player_details.csv")
-dfp = pd.read_csv(filename_pl, sep=";", index_col=False)
-'''
 # for example, "257" -> "NVS036APL"
-def player_id_to_num(player_id):
+def player_id_to_num(player_id, dfp):
     return dfp[dfp.PlayerId == player_id].PlayerNumber.iloc[0]
 
 # format: player_text_identifier, [dt1, dt2_incl]
@@ -103,17 +92,3 @@ def get_ots(player_num, dt1, dt2_incl, dfp, timeseries_path, train_len=30*6, ord
     assert((dt1 - tt_border_2).total_seconds() % (3600*24*7) == 0)
     predict_ret_shift = pd.Series(np.array(predict_ret), index=predict_ret.index + (dt1 - tt_border_2))
     return predict_ret_shift
-
-if __name__ == "__main__":
-    # example of input data
-
-    # player_num = player_id_to_num(257) # another way to set player: by id in folder name
-    player_num = "NVS036APL"
-    t1 = datetime.now()
-    # from 6th to 23th september INCLUDING 23th
-    ots = get_ots(player_num, datetime(2021, 9, 6), datetime(2021, 9, 23))
-    t2 = datetime.now()
-    print("time:", (t2-t1).total_seconds(), "s")
-    print(ots)
-    # ots.plot()
-    # plt.show()
